@@ -75,7 +75,10 @@ export default {
                     if (deleteAuthors[0]["avatar"]) {
                         let avatarPath = join(this.packDirectory, deleteAuthors[0]["avatar"]);
                         if (fs.existsSync(avatarPath)) {
-                            await deleteFileCompat(avatarPath);
+                            if (!await deleteFileCompat(avatarPath)) {
+                                this.authors.splice(this.authorIndex, 0, deleteAuthors[0]);
+                                return;
+                            }
                         }
                     }
                     this.newAuthorDialog.close();

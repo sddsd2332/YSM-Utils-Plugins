@@ -185,6 +185,7 @@
   "menu.ysm_utils.load_info_menu.files.delete_texture": "Delete Texture",
   "menu.ysm_utils.load_info_menu.files.delete_texture.tip": "Do you want to delete these texture files:",
   "menu.ysm_utils.load_info_menu.files.delete_files.tip": "Do you want to delete these files:",
+  "menu.ysm_utils.load_info_menu.files.move_to_trash_failed": "Failed to move the file to the Recycle Bin. The file was kept.",
   "menu.ysm_utils.load_info_menu.open_folder": "Open Folder",
   "menu.ysm_utils.old_version_transform.directory_exists": "A folder with the same name already exists!",
   "menu.ysm_utils.old_version_transform.select_output_directory": "Select Output Directory",

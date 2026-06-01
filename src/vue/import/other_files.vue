@@ -114,7 +114,10 @@ export default {
                 if (button !== 0) {
                     return;
                 }
-                await Promise.all(deleteFiles.map(file => deleteFileCompat(file)));
+                let deleted = await Promise.all(deleteFiles.map(file => deleteFileCompat(file)));
+                if (deleted.includes(false)) {
+                    return;
+                }
                 this.$delete(files, index);
             });
         }

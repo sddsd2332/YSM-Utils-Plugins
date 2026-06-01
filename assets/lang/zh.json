@@ -185,6 +185,7 @@
   "menu.ysm_utils.load_info_menu.files.delete_texture": "删除材质",
   "menu.ysm_utils.load_info_menu.files.delete_texture.tip": "你打算删除这些材质么：",
   "menu.ysm_utils.load_info_menu.files.delete_files.tip": "你打算删除这些文件么：",
+  "menu.ysm_utils.load_info_menu.files.move_to_trash_failed": "无法将文件移动到回收站，文件已保留",
   "menu.ysm_utils.load_info_menu.open_folder": "打开文件夹",
   "menu.ysm_utils.old_version_transform.directory_exists": "同名文件夹已经存在了！",
   "menu.ysm_utils.old_version_transform.select_output_directory": "选择导出文件夹",
