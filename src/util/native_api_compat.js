@@ -60,8 +60,8 @@ export function initNativeApiCompat() {
         message: "YSM Utils needs native dialogs so you can choose YSM model folders and files."
     });
     const shellApi = globalThis.electron?.shell ? undefined : requireNativeApi("shell", {
-        optional: false,
-        message: "YSM Utils needs shell access to open folders and move replaced files to the trash."
+        optional: true,
+        message: "YSM Utils can use shell access to open folders and move replaced files to the trash."
     });
 
     if (dialogApi || shellApi) {
@@ -74,7 +74,7 @@ export function initNativeApiCompat() {
 
     globalThis.currentwindow ??= null;
 
-    if (!globalThis.fs || !globalThis.electron?.dialog || !globalThis.electron?.shell || !globalThis.process) {
+    if (!globalThis.fs || !globalThis.electron?.dialog || !globalThis.process) {
         throw new Error("YSM Utils cannot load because required Blockbench native API permissions were not granted.");
     }
 }

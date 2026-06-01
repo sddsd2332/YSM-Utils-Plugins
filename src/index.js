@@ -6,6 +6,9 @@ import {directImportMenuAction} from "./menu/direct_import.js";
 import {createDefaultModel} from "./create/create_default.js";
 import {addYsmMolang} from "./molang/ysm_molang.js";
 import {initNativeApiCompat} from "./util/native_api_compat.js";
+import {openFolderAction} from "./import/open_import_dialog.js";
+
+let ysmUtilsMenu;
 
 BBPlugin.register(packageInfo.name, {
     title: packageInfo.title,
@@ -24,6 +27,9 @@ BBPlugin.register(packageInfo.name, {
         createDefaultModel.delete();
         directImportMenuAction.delete();
         currentInfoMenuAction.delete();
+        openFolderAction.delete();
+        ysmUtilsMenu?.delete();
+        MenuBar.update();
     },
     oninstall() {
     },
@@ -36,7 +42,7 @@ function doLoadEvent() {
     loadI18n();
     initCacheYsmFoldersAction();
     addYsmMolang();
-    new BarMenu("ysm_utils", [
+    ysmUtilsMenu = new BarMenu("ysm_utils", [
         "ysm_utils.create_default_model",
         "ysm_utils.direct_import",
         "ysm_utils.current_info_menu",

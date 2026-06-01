@@ -9,6 +9,23 @@ import {saveNormalization} from "./save_normalization.js";
 import {readYsmFile} from "./ysm_file_read.js";
 import {getLanguageMap} from "../util/language.js";
 
+let currentOpenFolderPath = "";
+export const openFolderAction = new Action("ysm_utils.load_info_menu.open_folder", {
+    name: "menu.ysm_utils.load_info_menu.open_folder",
+    icon: "fa-folder-open",
+    click: function () {
+        if (!currentOpenFolderPath) {
+            return;
+        }
+        if (electron?.shell?.openPath) {
+            electron.shell.openPath(currentOpenFolderPath).then(result => {
+            });
+        } else {
+            Blockbench.showQuickMessage(tl("menu.ysm_utils.load_info_menu.open_folder"), 3000);
+        }
+    }
+});
+
 function onDialogCancel(ysmJson, ysmJsonPath, sha256Cache) {
     // 关闭页面时，计算一次哈希值
     let sha256 = getSha256(ysmJson);
@@ -54,6 +71,7 @@ function getSha256(ysmJson) {
 }
 
 export function openImportDialog(packDirectory) {
+    currentOpenFolderPath = packDirectory;
     let ysmJsonPath = join(packDirectory, "ysm.json");
     let ysmJson = readYsmFile(packDirectory);
 
@@ -101,14 +119,7 @@ export function openImportDialog(packDirectory) {
             },
             page: "metadata",
             actions: [
-                new Action("ysm_utils.load_info_menu.open_folder", {
-                    name: "menu.ysm_utils.load_info_menu.open_folder",
-                    icon: "fa-folder-open",
-                    click: function () {
-                        electron.shell.openPath(packDirectory).then(result => {
-                        });
-                    }
-                }),
+                openFolderAction,
             ],
             onPageSwitch(page) {
                 if (importModelMenuDialog.content_vue.type !== page) {

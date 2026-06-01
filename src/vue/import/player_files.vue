@@ -3,6 +3,7 @@ import {join} from "path";
 import {changeCurrentFile, changeCurrentFileWithFilters, removeCurrentFile} from "../../import/file_handler.js";
 import {importArmFile, importMainFile} from "../../import/file_import.js";
 import {SUPPORTED_IMAGE_NAMES, SUPPORTED_IMAGE_TYPES} from "../../util/image_handle.js";
+import {deleteFileCompat} from "../../util/file_delete.js";
 
 export default {
     props: {
@@ -95,13 +96,11 @@ export default {
                 buttons: [tl("dialog.confirm"), tl("dialog.cancel")],
                 confirm: 0,
                 cancel: 1
-            }, (button) => {
+            }, async (button) => {
                 if (button !== 0) {
                     return;
                 }
-                for (let file of deleteFiles) {
-                    electron.shell.trashItem(file);
-                }
+                await Promise.all(deleteFiles.map(file => deleteFileCompat(file)));
                 textures.splice(index, 1);
             });
         }

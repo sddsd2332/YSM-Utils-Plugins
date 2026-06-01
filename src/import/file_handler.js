@@ -1,5 +1,6 @@
 import {join} from "path";
 import {arePathsEqual, createDirectories} from "../util/path_util.js";
+import {deleteFileCompat} from "../util/file_delete.js";
 
 export async function changeCurrentFile(packDir, pathValue, defaultDir, extension) {
     return await changeCurrentFileWithFilters(packDir, pathValue, defaultDir, [{
@@ -36,7 +37,7 @@ export async function changeCurrentFileWithFilters(packDir, pathValue, defaultDi
         // 将原文件丢到回收站
         let oldFileExists = false;
         if (fs.existsSync(srcFilePath)) {
-            await electron.shell.trashItem(srcFilePath);
+            await deleteFileCompat(srcFilePath);
             oldFileExists = true;
         }
         // 复制到指定目录下
@@ -74,12 +75,12 @@ export async function removeCurrentFile(packDir, pathValue, callback) {
         buttons: [tl("dialog.confirm"), tl("dialog.cancel")],
         confirm: 0,
         cancel: 1
-    }, (button) => {
+    }, async (button) => {
         if (button === 0) {
             let srcFilePath = join(packDir, pathValue);
             // 将原文件丢到回收站
             if (fs.existsSync(srcFilePath)) {
-                electron.shell.trashItem(srcFilePath);
+                await deleteFileCompat(srcFilePath);
             }
             callback();
         }
